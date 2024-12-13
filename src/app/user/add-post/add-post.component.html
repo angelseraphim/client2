@@ -26,9 +26,17 @@
       <input matInput formControlName="caption">
     </mat-form-field>
 
-    <!-- Вставляем компонент карты -->
+    <input type="text" class="tags" placeholder="Tags (optional)">
+
     <h3>Select location on the map:</h3>
     <app-map (locationSelected)="onLocationSelected($event)"></app-map>
+
+    <div appearance="outline">
+      Date
+      <input type="date" class="date">
+    </div>
+
+
 
     <div style="text-align: right">
       <button mat-flat-button color="primary" 

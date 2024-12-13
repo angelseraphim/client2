@@ -30,63 +30,6 @@ export class IndexComponent implements OnInit, OnDestroy {
     private userService: UserService
   ) {}
 
-  postComment(message: string, postId: number, postIndex: number): void {
-    if (!message.trim()) {
-      this.notificationService.showSnackBar('Комментарий не может быть пустым');
-      return;
-    }
-  
-    this.commentService.addToCommentToPost(postId, message).subscribe(
-      comment => {
-        this.posts[postIndex].comments.push(comment);
-        this.notificationService.showSnackBar('Комментарий добавлен');
-      },
-      error => {
-        console.error('Ошибка при добавлении комментария:', error);
-        this.notificationService.showSnackBar('Ошибка при добавлении комментария');
-      }
-    );
-  }  
-
-  likePost(postId: number, postIndex: number): void {
-    const post = this.posts[postIndex];
-  
-    if (post.usersLiked.includes(this.user.username)) {
-      this.postService.likePost(postId, this.user.username).subscribe(
-        () => {
-          const userIndex = post.usersLiked.indexOf(this.user.username);
-          post.usersLiked.splice(userIndex, 1);
-          this.notificationService.showSnackBar('Like removed');
-        },
-        error => {
-          console.error('Error removing like:', error);
-          this.notificationService.showSnackBar('Error removing like');
-        }
-      );
-    } else {
-      this.postService.likePost(postId, this.user.username).subscribe(
-        () => {
-          post.usersLiked.push(this.user.username);
-          this.notificationService.showSnackBar('Post liked');
-        },
-        error => {
-          console.error('Error liking post:', error);
-          this.notificationService.showSnackBar('Error liking post');
-        }
-      );
-    }
-  }  
-
-  ngAfterViewInit(): void {
-    const script = document.createElement('script');
-    script.src = 'https://maps.api.2gis.ru/2.0/loader.js?pkg=full';
-    document.body.appendChild(script);
-  
-    script.onload = () => {
-      this.initializeMaps();
-    };
-  }
-
   ngOnInit(): void {
     const script = document.createElement('script');
     script.src = 'https://maps.api.2gis.ru/2.0/loader.js?pkg=full';
@@ -95,12 +38,12 @@ export class IndexComponent implements OnInit, OnDestroy {
     script.onload = () => {
       this.postService.getAllPosts().subscribe(data => {
         this.posts = data;
-        this.getImagesToPosts(this.posts);
         this.getCommentsToPosts(this.posts);
         this.isPostsLoaded = true;
         this.initializeMaps();
       });
 
+      // Загружаем данные пользователя
       this.userService.getCurrentUser().subscribe(data => {
         this.user = data;
         this.isUserDataLoaded = true;
@@ -142,13 +85,13 @@ export class IndexComponent implements OnInit, OnDestroy {
     });
   }
 
-  getImagesToPosts(posts: Post[]): void {
-    posts.forEach(p => {
-      this.imageService.getImageToPost(p.id).subscribe(data => {
-        p.image = data.imageBytes;
-      });
-    });
-  }
+  // getImagesToPosts(posts: Post[]): void {
+  //   posts.forEach(p => {
+  //     this.imageService.getImageToPost(p.id).subscribe(data => {
+  //       p.image = data.imageBytes;
+  //     });
+  //   });
+  // }
 
   getCommentsToPosts(posts: Post[]): void {
     posts.forEach(p => {
@@ -184,6 +127,35 @@ export class IndexComponent implements OnInit, OnDestroy {
         post.comments.splice(commentIndex, 1);
       });
   }
+
+  postComment(message: string, postId: number, postIndex: number): void {
+    if (!message.trim()) {
+      return;
+    }
+  
+    this.commentService.addToCommentToPost(postId, message).subscribe((newComment) => {
+      this.posts[postIndex].comments.push(newComment);
+      this.notificationService.showSnackBar('Comment added');
+    });
+  }
+
+  likePost(postId: number, index: number): void {
+    const userHasLiked = this.posts[index].usersLiked.includes(this.user.username);
+  
+    if (userHasLiked) {
+      this.postService.likePost(postId, this.user.username).subscribe(() => {
+        this.posts[index].usersLiked = this.posts[index].usersLiked.filter(
+          (username: string) => username !== this.user.username
+        );
+        this.notificationService.showSnackBar('Like removed');
+      });
+    } else {
+      this.postService.likePost(postId, this.user.username).subscribe(() => {
+        this.posts[index].usersLiked.push(this.user.username);
+        this.notificationService.showSnackBar('Post liked');
+      });
+    }
+  }  
 
   ngOnDestroy() {
     if (this.posts && this.posts.length > 0) {

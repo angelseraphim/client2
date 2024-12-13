@@ -5,7 +5,7 @@ import { ImageUploadService } from '../../service/image-upload.service';
 import { CommentService } from '../../service/comment.service';
 import { NotificationService } from '../../service/notification.service';
 
-declare var DG: any; // Объявляем DG для работы с 2ГИС API
+declare var DG: any;
 
 @Component({
   selector: 'app-user-posts',
@@ -25,13 +25,11 @@ export class UserPostsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Загружаем скрипт 2ГИС асинхронно
     const script = document.createElement('script');
     script.src = 'https://maps.api.2gis.ru/2.0/loader.js?pkg=full';
     document.body.appendChild(script);
 
     script.onload = () => {
-      // Когда скрипт загружен, выполняем код
       this.postService.getPostForCurrentUser()
         .subscribe(data => {
           this.posts = data;
@@ -39,17 +37,14 @@ export class UserPostsComponent implements OnInit, OnDestroy {
           this.getCommentsToPosts(this.posts);
           this.isUserPostsLoaded = true;
 
-          // Инициализируем карты после загрузки данных
           this.initializeMaps();
         });
     };
   }
 
-  // Инициализация карт для каждого поста
   initializeMaps(): void {
     this.posts.forEach((post, index) => {
       if (post.location) {
-        // Разделяем строку location на широту и долготу
         const coords = post.location.split(',').map(coord => parseFloat(coord.trim()));
         const latitude = coords[0];
         const longitude = coords[1];
@@ -117,13 +112,12 @@ export class UserPostsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // Очистка карт и других ресурсов при уничтожении компонента
     if (this.posts && this.posts.length > 0) {
       this.posts.forEach((_, index) => {
         const mapId = 'map-' + index;
         const mapElement = document.getElementById(mapId);
         if (mapElement) {
-          mapElement.innerHTML = ''; // Удаляем карту из DOM
+          mapElement.innerHTML = ''; 
         }
       });
     }

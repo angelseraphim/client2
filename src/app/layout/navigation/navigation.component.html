@@ -7,13 +7,14 @@
       <a routerLink="/landpage">Info</a>
   </nav>
 
-  <button *ngIf="isLoggedIn" [matMenuTriggerFor]="menu" matTooltip="Profile" mat-icon-button class="menu">
+  <div *ngIf="isLoggedIn" [matMenuTriggerFor]="menu" class="menu">
     <mat-icon color="accent">{{ user.username }} <img src="./../../../assets/img/user.ico"></mat-icon>
-  </button>
+  </div>
   <mat-menu id="menu-item" #menu="matMenu">
     <button class="menu-button" mat-menu-item routerLink="/profile">Profile <img src="./../../../assets/img/users.svg"></button>
     <button class="menu-button" (click)="logout()" mat-menu-item>
       Logout <img src="./../../../assets/img/Logout.svg">
     </button>
   </mat-menu>
+
 </div>

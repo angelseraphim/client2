@@ -18,7 +18,7 @@ export class AddPostComponent implements OnInit {
   isPostCreated = false;
   createdPost: Post | null = null;
   previewImgURL: string | ArrayBuffer | null = null;
-  selectedLocation: { lat: number; lng: number } | null = null; // Хранение выбранных координат
+  selectedLocation: { lat: number; lng: number } | null = null; 
 
   constructor(
     private postService: PostService,
@@ -36,7 +36,6 @@ export class AddPostComponent implements OnInit {
     return this.fb.group({
       title: ['', Validators.required],
       caption: ['', Validators.required],
-      // Удалено поле location
     });
   }
 
@@ -51,13 +50,17 @@ export class AddPostComponent implements OnInit {
       return;
     }
   
-    // Преобразуем координаты в строку
+    const tagsInput = (document.querySelector('.tags') as HTMLInputElement)?.value || '';
+    const dateInput = (document.querySelector('.date') as HTMLInputElement)?.value || '';
+  
+    const updatedCaption = `${this.postForm.value.caption}|${tagsInput}|${dateInput}`;
+  
     const locationString = `${this.selectedLocation.lat},${this.selectedLocation.lng}`;
   
     const postPayload = {
       title: this.postForm.value.title,
-      caption: this.postForm.value.caption,
-      location: locationString, // Передаем строку
+      caption: updatedCaption,
+      location: locationString,
     };
   
     this.postService.createPost(postPayload).subscribe({

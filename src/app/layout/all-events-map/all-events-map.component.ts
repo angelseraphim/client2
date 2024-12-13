@@ -3,7 +3,7 @@ import { Post } from '../../models/Post';
 import { PostService } from '../../service/post.service';
 import { UserService } from '../../service/user.service';
 
-declare var DG: any; // Объявляем DG для работы с 2ГИС API
+declare var DG: any;
 
 @Component({
   selector: 'app-all-events-map',
@@ -40,7 +40,7 @@ export class AllEventsMapComponent implements OnInit {
 
   initializeMap(): void {
     const map = DG.map('all-events-map', {
-      center: [51.128263, 71.430485], // Москва как дефолтный центр карты
+      center: [51.128263, 71.430485],
       zoom: 5
     });
 

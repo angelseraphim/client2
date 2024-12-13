@@ -54,7 +54,6 @@ export class RegisterComponent implements OnInit {
 
       setTimeout(() => {
         this.router.navigate(['/login']);
-        console.log('Задержка завершена');
       }, 1000);
 
     }, error => {
