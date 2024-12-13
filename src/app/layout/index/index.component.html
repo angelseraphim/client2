@@ -1,0 +1,58 @@
+<div class="layout">
+  <aside class="sidebar">
+    <button mat-raised-button color="primary" (click)="addEvent()">Add Event</button>
+    <button mat-raised-button color="primary" (click)="showEventsMap()">Events Map</button>
+  </aside>
+
+  <main class="content">
+    <div *ngIf="isPostsLoaded && isUserDataLoaded" class="index-page">
+      <mat-card class="post-card" *ngFor="let post of posts; let i = index">
+        <mat-card-header class="post-header">
+          <div mat-card-avatar class="header-avatar"></div>
+          <mat-card-title>{{ post.title }}</mat-card-title>
+          <mat-card-subtitle align="start">@{{ post.username }}</mat-card-subtitle>
+          <mat-card-subtitle>{{ post.location }}</mat-card-subtitle>
+
+          <div id="map-{{i}}" style="width: 100%; height: 300px;"></div>
+        </mat-card-header>
+
+        <!-- <img mat-card-image [src]="formatImage(post.image)" alt="post image"> -->
+
+
+        <mat-card-content>
+          <p>{{ post.caption }}</p>
+        </mat-card-content>
+
+        <mat-card-actions align="start">
+          <button
+            *ngIf="isUserDataLoaded"
+            mat-button
+            (click)="likePost(post.id, i)"
+            [ngClass]="post.usersLiked.includes(user.username) ? 'is-liked' : 'not-liked'">
+            <mat-icon>favorite</mat-icon> Like
+          </button>
+        </mat-card-actions>
+
+        <div class="comments">
+          <p *ngFor="let comment of post.comments">
+            <span class="comment-username">{{ comment.username }}</span>: {{ comment.message }}
+          </p>
+        </div>
+
+        <mat-form-field class="comment-input">
+          <mat-label>Leave a comment...</mat-label>
+          <input
+            matInput
+            #message
+            maxlength="128"
+            (keyup.enter)="postComment($event.target.value, post.id, i)">
+          <mat-hint align="end">{{ message.value.length }} / 128</mat-hint>
+        </mat-form-field>
+      </mat-card>
+    </div>
+
+    <div *ngIf="!isPostsLoaded || !isUserDataLoaded" class="empty-page">
+      Простите, ничего не найдено :(
+    </div>
+  </main>
+</div>

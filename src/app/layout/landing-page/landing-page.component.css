@@ -1,0 +1,221 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+}
+
+section {
+    min-height: 100vh;
+    padding: 10rem 12%;
+}
+
+.text-animation{
+    font-size: 34px;
+    font-weight: 600;
+    min-width: 280px;
+}
+
+.main_text{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center; /* Центрирует картинку */
+    background-repeat: no-repeat; /* Запрещает повторение картинки */
+
+
+    }
+
+.home-content {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    text-align: left;
+}
+
+.home-content h1 {
+    font-size: 5rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-top: 1.5rem;
+    color: #00ff51;
+
+}
+
+.home-content h3 {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.home-content p {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.8;
+    max-width: 1000px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 1rem 2.8rem;
+    background: #77ff00;
+    box-shadow: 0 0 25px #77ff00;
+    border-radius: 4rem;
+    font-size: 1.6rem;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 50px #77ff00;
+}
+
+.footer {
+    padding: 40px 0;
+    background-color: #0A2E36;
+}
+
+.footer .social {
+    text-align: center;
+    padding-bottom: 25px;
+}
+
+.footer .social a {
+    font-size: 25px;
+    border: 2px solid #77ff00;
+    width: 42px;
+    height: 42px;
+    line-height: 42px;
+    display: inline-block;
+    border-radius: 50%;
+    margin: 0 10px;
+    transition: 0.3s ease-in-out;
+    background-color: #77ff00;
+    box-shadow: 0 0 25px #77ff00;
+    text-decoration: none;
+}
+
+.footer .social a:hover {
+    transform: scale(1.2);
+    background-color: white;
+    color: black;
+    border: 2px solid #8bef0a;
+}
+
+.footer ul {
+    list-style: none;
+    text-align: center;
+}
+
+.footer ul li {
+    display: inline-block;
+    padding: 0 15px;
+}
+
+.footer ul li a {
+    color: white;
+    border-bottom: 3px solid transparent;
+    transition: 0.3s ease-in-out;
+}
+
+.footer ul li a:hover {
+    border-bottom: 3px solid #77ff00;
+}
+
+.footer .copyright {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.span{
+    color: #77ff00;
+}
+
+.animation{
+    position: relative;
+    height: 100%;
+}
+
+.animation::before{
+    content: "AI Api";
+    color: #77ff00;
+    animation: words 20s infinite;
+}
+
+.animation::after{
+    content: "";
+    background-color:  #0A2E36;;
+    position: absolute;
+    width: calc(100% + 8px);
+    height: 100%;
+    border-left: 3px solid  #0A2E36;;
+    right: -8px;
+    animation: cursor 0.6s infinite, typing 20s infinite;
+}
+
+@keyframes cursor{
+    to{
+        border-left: 2px solid #77ff00;
+    }
+}
+@keyframes words{
+    0%,
+    20%{
+        content: "Events";
+    }
+    21%,
+    40%{
+        content: "Map";
+    }
+    41%,
+    60%{
+        content: "Culture";
+    }
+    61%,
+    80%{
+        content: "World";
+    }
+    81%,
+    100%{
+        content: "Everything";
+    }
+}
+
+@keyframes typing{
+    10%,
+    15%,
+    30%,
+    35%,
+    50%,
+    55%,
+    70%,
+    75%,
+    90%,
+    95%{
+        width: 0;
+    }
+
+    5%,
+    20%,
+    25%,
+    40%,
+    45%,
+    60%,
+    65%,
+    80%,
+    85%{
+        width: calc(100% + 8px);
+    }
+}

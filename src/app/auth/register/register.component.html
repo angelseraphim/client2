@@ -1,0 +1,58 @@
+<div class="register-page">
+  <div class="form-container">
+    <h2 class="form-title">Create an Account</h2>
+    <p class="form-subtitle">
+      Already have an account? 
+      <a class="form-link" routerLink="/login">Sign in</a>
+    </p>
+    <form [formGroup]="registerForm">
+      <div class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label>Email Address</mat-label>
+          <input matInput formControlName="email" placeholder="Enter your email" />
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" placeholder="Choose a username" />
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstname" placeholder="Your first name" />
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastname" placeholder="Your last name" />
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" placeholder="Create a password" />
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput type="password" formControlName="confirmPassword" placeholder="Repeat your password" />
+        </mat-form-field>
+      </div>
+      <div class="form-actions">
+        <button
+          class="form-button"
+          [disabled]="registerForm.invalid"
+          (click)="submit()"
+          mat-flat-button
+          color="primary"
+        >
+          Register
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

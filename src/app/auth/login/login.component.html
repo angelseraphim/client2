@@ -1,0 +1,38 @@
+<div class="page">
+  <div class="pos">
+    
+  </div>
+  <div class="login-page">
+  <h2 class="title">Login</h2>
+  <form [formGroup]="loginForm" class="login-form">
+    <div class="form-group">
+      <!-- Email Field -->
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Email Address</mat-label>
+        <input matInput formControlName="username" placeholder="Enter your email" />
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <!-- Password Field -->
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="Enter your password" />
+      </mat-form-field>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="form-controls">
+      <button 
+        class="submit-button" 
+        [disabled]="loginForm.invalid" 
+        (click)="submit()" 
+        mat-flat-button 
+        color="primary">
+        Login
+      </button>
+      <a class="register-link" routerLink="/register">Register</a>
+    </div>
+  </form>
+</div>
+</div>
